@@ -5,9 +5,7 @@ class CfgPatches
 		units[] = {};
 		weapons[] = {};
 		requiredVersion = 1.5;
-		requiredAddons[] = {
-			
-		};
+		requiredAddons[] = {};
 		author[] = { "Nickorr" };
         version = 0.2.0;
         versionStr = "0.2.0";

@@ -2,9 +2,9 @@
 
 NSA_CD_vehPassabilityArray = [
 	
-	// Классы уникальной техники (без модификаций или копий):
+	// Unique vehicle classes (no variations):
 	
-	["rhs_2s3_tv",			30],		// Акация
+	["rhs_2s3_tv",			30],		// Akacia
 	// ["RHS_M6",				31],		// M6A2
 	// ["RHS_M6_wd",			31],		
 	// ["rhsusf_m109d_usarmy",	31],
@@ -14,8 +14,9 @@ NSA_CD_vehPassabilityArray = [
 	["sub_ins_weu_van",	33],		// M998 HMMWV
 	
 	
-	// Модель с множеством модификаций или копий с другим класнеймом - обозначать с решеткой-префиксом и только заглавными буквами + цифрами
-	// Модификации располагать в порядке: ( длиннейший индекс сначала, ... , базовая модель - последней )
+	/* 	Model with multiple variations or custom faction copies - mark with '#CAPITAL_LETTERS_OR_DIGITS'
+		Put variations in order: <the longest index first>, .. , <base model last>
+	*/
 	
 // Tanks
 	// ["#M1A",			31],		// Abrams family
@@ -28,15 +29,15 @@ NSA_CD_vehPassabilityArray = [
 
 	
 // IFVs	
-	["#BMD4",			35],    	//бмд4
-	["#BMD",			32],    	//бмд1 и 2, а так же машины на их базе
-	["#BMP3",			30],		//БМП3
-	["#BMP2D",			30],		//БМП2Д
-	["#BMP1D",			30],		//БМП1Д
-	["#BMP",			35],		//все первые и вторые БМПшки
-	["#BRM1",			35],		//ПРП на базе первой БМП
+	["#BMD4",			35],    	
+	["#BMD",			32],    	//BMD1, BMD2 and vehicles on its base
+	["#BMP3",			30],		
+	["#BMP2D",			30],		
+	["#BMP1D",			30],		
+	["#BMP",			35],		//BMP1, BMP2
+	["#BRM1",			35],		// Based on BMP1
 	// ["#M2A",			31],		// Bradley family
-	["#PRP3",			35],		//ПРП на базе первой БМП
+	["#PRP3",			35],		// Based on BMP1
 
 	
 // APCs	
@@ -86,16 +87,16 @@ NSA_CD_vehPassabilityArray = [
 	["#QUADBIKE",		25],
 	// ["#RG33",			31],
 	["#S1203",			25],
-	["#TIGR_STS",		35],		//тигр СТС с 5ым классом бронирования
-	["#TIGR",			41],		//тигр и тигр-М (двннные взяты с 2 левых сайтов, по тигр-м практически ничего)
+	["#TIGR_STS",		35],		
+	["#TIGR",			41],		
 	// ["#UAZ",			31],		
 	
 	
 // Other Vehicles
-	["#9K79",			30], 		// Точка-У
-	["#BRDM",			30],		//БРДМы
-	["#PTS",			30],		//ПТС
-	["#ZSU",			30],		//зсу
+	["#9K79",			30], 		// Tochka-U
+	["#BRDM",			30],		
+	["#PTS",			30],		
+	["#ZSU",			30],		
 
 	
 	["DEFAULT",			31]

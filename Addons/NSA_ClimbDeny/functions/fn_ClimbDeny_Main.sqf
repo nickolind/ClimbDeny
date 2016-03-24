@@ -1,16 +1,8 @@
 
 /*
 
-Свои значения проходимости (может задать картодел в init.sqf):
+Custom passability settings can be set by map maker (put expression in init.sqf). Example:
 	NSA_CD_custom_vehPassability = [ ["rhs_sprut_vdv",35], ["rhs_2s3_tv",30] ];
-
-*/
-
-
-/* ToDo
-
-- Закончить составление таблицы классов техники
-- эффект "рытья земли" когда буксуют и сползают
 
 */
 
@@ -18,7 +10,7 @@
 
 
 
-// блок для тестирования
+// debug block
 NSA_CD_surfaseHumidity = nil;
 NSA_CD_active = false;
 sleep 4;
@@ -67,12 +59,12 @@ NSA_CD_fn_calculate_MSA = {
 			
 		if ( _vehicle isKindOf "Tank" ) then { _humidityCoef = _vehPassability * 0.15 } else { _humidityCoef = _vehPassability * 0.25 };
 		
-		NSA_CD_maxSlopeAngle = (_vehPassability * 0.9) - ( 		// -10% от паспортных данных машины
+		NSA_CD_maxSlopeAngle = (_vehPassability * 0.9) - ( 		// -10% of declared characteristics
 				(_terrainCoef) 
 				+ 
 				(_humidityCoef * NSA_CD_surfaseHumidity * (0.5 * (1 + (1 - _isOnRoad)))) 
-														// на дороге - 	0.5 * (1 + (1-1)) = 0.5 * 1 = 0.5 - эффект влажной поверхности действует на 50%
-														// не на дороге - 	0.5 * (1 + (1-0)) = 0.5 * 2 = 1 - эффект влажной поверхности действует на 100%		
+														// On road - 		0.5 * (1 + (1-1)) = 0.5 * 1 = 0.5 - 50% of wet surface effect
+														// On offroad - 	0.5 * (1 + (1-0)) = 0.5 * 2 = 1 - 	100% of wet surface effect		
 			);
 		sleep 0.43;
 	};
@@ -131,8 +123,8 @@ NSA_CD_fn_spReduceSoft = {
 	while {NSA_CD_active && !NSA_CD_escapeVeh} do {
 		sleep 0.05;
 		
-		NSA_CD_limit = (NSA_CD_limit - 1) max 0;												// Линейное замедление
-		// NSA_CD_limit = (NSA_CD_limit - (3 * (2 / (NSA_CD_limit max 4)))) max 0;				// Нелинейное замедление (не подобрана функция)
+		NSA_CD_limit = (NSA_CD_limit - 1) max 0;												// linear reduction
+		// NSA_CD_limit = (NSA_CD_limit - (3 * (2 / (NSA_CD_limit max 4)))) max 0;				// non-linear reduction (function not found)
 		if ( 
 			(NSA_CD_limit <= (_this select 1)) 
 			|| 
@@ -207,25 +199,28 @@ while {NSA_CD_active} do {
 			
 			_vehicle = _this select 0;
 			
-			// убрать hint
-			// hint format ["%1\n%2\n%3\n%4\n%5\n%6\n%7\n%8\n%9\n%10", 
-				// ( [_vehicle] call NSA_CD_fn_getVehClassname ),
-				// NSA_CD_maxSlopeAngle,
-				// acos ((vectorUp _vehicle) vectorDotProduct ([0,0,1])),
-				// (acos ((surfaceNormal position _vehicle) vectorDotProduct ([0,0,1]) )),
-				// NSA_CD_limit,
-				// speed _vehicle,
-				// velocity _vehicle,
-				// NSA_CD_lcCoef,
-				// NSA_CD_lcTick,
-				// NSA_CD_gl_counter
-			// ];
+			/* 
+			// debug hint
+			hint format ["%1\n%2\n%3\n%4\n%5\n%6\n%7\n%8\n%9\n%10", 
+				( [_vehicle] call NSA_CD_fn_getVehClassname ),
+				NSA_CD_maxSlopeAngle,
+				acos ((vectorUp _vehicle) vectorDotProduct ([0,0,1])),
+				(acos ((surfaceNormal position _vehicle) vectorDotProduct ([0,0,1]) )),
+				NSA_CD_limit,
+				speed _vehicle,
+				velocity _vehicle,
+				NSA_CD_lcCoef,
+				NSA_CD_lcTick,
+				NSA_CD_gl_counter
+			];
+			// endof debug hint 
+			*/
 			
 
 			if ( (player != driver _vehicle) || !(NSA_CD_active) ) then {
 				["NSA_ClimbDeny_loop", "onEachFrame"] call BIS_fnc_removeStackedEventHandler;
 				NSA_CD_escapeVeh = true;
-				// hint ""; // убрать hint
+				// hint ""; // debug hint
 			};
 
 			_speed = abs(speed _vehicle);
